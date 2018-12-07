@@ -36,25 +36,5 @@ public class SerializationUtils {
         Input input = new Input(src);
         return k.readObject(input, type);
     }
-
-    // jdk原生序列化反序列化
-    public static byte[] jdkSerialize(Object obj) {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             ObjectOutputStream oos = new ObjectOutputStream(baos);) {
-            oos.writeObject(obj);
-            return baos.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Object jdkDeserialize(byte[] bits) {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(bits);
-             ObjectInputStream ois = new ObjectInputStream(bais);
-        ) {
-            return ois.readObject();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }*/
+        */
 }

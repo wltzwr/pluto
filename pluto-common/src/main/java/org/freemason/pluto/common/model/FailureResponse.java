@@ -2,20 +2,21 @@ package org.freemason.pluto.common.model;
 
 
 public class FailureResponse extends AbstractResponse{
-    private final Exception e;
+
+    private final String errorMessage;
 
     public FailureResponse(InvokeRequest request, Exception e) {
         super(request, false);
-        this.e = e;
+        this.errorMessage = e == null ? "unknown exception caused." : e.getMessage();
     }
 
     @Override
     public Object getResult() {
-        throw new UnsupportedOperationException("Failure response does not has result.");
+        return null;
     }
 
     @Override
     public String exceptionMessage() {
-        return e.getMessage();
+        return errorMessage;
     }
 }

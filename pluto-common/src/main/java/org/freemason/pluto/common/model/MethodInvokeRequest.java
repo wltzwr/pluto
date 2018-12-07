@@ -3,13 +3,13 @@ package org.freemason.pluto.common.model;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.UUID;
 
-import static org.freemason.pluto.common.Constants.DEFAULT_VERSION;
 
 public class MethodInvokeRequest implements InvokeRequest{
     private final String id;
-
-    private String version;
 
     private String className;
 
@@ -19,37 +19,42 @@ public class MethodInvokeRequest implements InvokeRequest{
 
     private Object[] parameters;
 
-
-    public MethodInvokeRequest(String version, String id, Method method, Object...parameters) {
+    public MethodInvokeRequest(String id, Method method, Object...parameters) {
+        Assert.notNull(id, "id must not be null.");
         Assert.notNull(method, "method must not be null.");
-        if (method.getParameterCount() > 0 && parameters != null){
-            Assert.isTrue(method.getParameterCount() == parameters.length, "wrong number of arguments.");
-        }
-        this.version = version;
         this.id = id;
         this.methodName = method.getName();
         this.className = method.getDeclaringClass().getName();
+        initParameters(method, parameters);
+    }
+
+    public MethodInvokeRequest(Method method, Object...parameters) {
+        this(UUID.randomUUID().toString(), method, parameters);
+    }
+
+    public MethodInvokeRequest(Method method) {
+        this(method, null);
+    }
+
+    private void initParameters(Method method, Object...parameters) {
+        int requiredParamCount = method.getParameterCount();
+        if (requiredParamCount == 0){
+            this.parameters = null;
+            this.parameterTypeNames = null;
+            return;
+        }
+        int suppliedParamCount = parameters == null ? 0 : parameters.length;
+        Assert.isTrue(requiredParamCount == suppliedParamCount, "suppliedParamCount must be equal to requiredParamCount");
         this.parameters = parameters;
-        setParameterTypeNames(method.getParameterTypes());
-    }
-
-    public MethodInvokeRequest(String id, Method method, Object...parameters) {
-        this(DEFAULT_VERSION, id, method, parameters);
-    }
-
-    public MethodInvokeRequest(String id, Method method) {
-        this(DEFAULT_VERSION, id, method, null);
-    }
-
-
-
-    @Override
-    public String version() {
-        return version;
+        this.parameterTypeNames = new String[requiredParamCount];
+        Class<?>[] paramTypes = method.getParameterTypes();
+        for (int i = 0; i < requiredParamCount; i++) {
+            parameterTypeNames[i] = paramTypes[i].getName();
+        }
     }
 
     @Override
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
@@ -74,11 +79,11 @@ public class MethodInvokeRequest implements InvokeRequest{
     }
 
 
-    private void setParameterTypeNames(Class<?>[] parameterTypes) {
+    /*private void initParameterTypeNames(Class<?>[] parameterTypes) {
         int length = parameterTypes.length;
         this.parameterTypeNames = new String[length];
         for (int i = 0; i < length; i++) {
             parameterTypeNames[i] = parameterTypes[i].getName();
         }
-    }
+    }*/
 }

@@ -6,8 +6,8 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import org.freemason.pluto.common.model.InvokeResponse;
 import org.freemason.pluto.common.utils.SerializationUtils;
 
-import static org.freemason.pluto.common.Constants.INVOKE;
-import static org.freemason.pluto.common.Constants.PROTOCOL_HEADER_SIGN;
+import static org.freemason.pluto.common.model.ETFOProtocol.INVOKE;
+import static org.freemason.pluto.common.model.ETFOProtocol.PROTOCOL_HEADER_SIGN;
 
 
 /**

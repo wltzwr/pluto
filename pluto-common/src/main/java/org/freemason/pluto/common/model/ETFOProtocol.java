@@ -1,9 +1,23 @@
 package org.freemason.pluto.common.model;
 
 
-import static org.freemason.pluto.common.Constants.PROTOCOL_HEADER_SIGN;
 
+/**
+ * 交互协议的模型
+ */
 public class ETFOProtocol{
+
+    public static final String DEFAULT_VERSION = "1.0.0";
+
+    public static final int PROTOCOL_HEADER_SIGN = 8341;
+
+    public static final int MAX_CONTENT_LENGTH = 1024;
+
+    public static final byte HEART_BEAT = 82;
+
+    public static final byte INVOKE = 8;
+
+
     //开始的头标志 4 byte
     private final int header_sign = PROTOCOL_HEADER_SIGN;
     //content长度 4 byte
@@ -13,7 +27,7 @@ public class ETFOProtocol{
     //内容
     private byte[] content;
 
-    public ETFOProtocol(byte type, byte[] content) {
+    private ETFOProtocol(byte type, byte[] content) {
         this.type = type;
         this.contentLength = content.length;
         this.content = content;

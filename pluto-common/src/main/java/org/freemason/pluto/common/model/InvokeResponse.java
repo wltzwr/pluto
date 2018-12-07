@@ -11,5 +11,4 @@ public interface InvokeResponse extends Serializable {
     boolean isSuccess();
 
     String exceptionMessage();
-
 }

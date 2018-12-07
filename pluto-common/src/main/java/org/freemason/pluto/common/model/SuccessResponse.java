@@ -1,11 +1,11 @@
 package org.freemason.pluto.common.model;
 
 
-public class SuccessfulInvokeResponse extends AbstractResponse{
+public class SuccessResponse extends AbstractResponse{
 
     private Object result;
 
-    public SuccessfulInvokeResponse(InvokeRequest invokeRequest, Object result) {
+    public SuccessResponse(InvokeRequest invokeRequest, Object result) {
         super(invokeRequest, true);
         this.result = result;
     }
@@ -18,6 +18,6 @@ public class SuccessfulInvokeResponse extends AbstractResponse{
 
     @Override
     public final String exceptionMessage() {
-        throw new UnsupportedOperationException("Successful response does not has any exception.");
+        return null;
     }
 }

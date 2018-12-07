@@ -5,10 +5,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import org.freemason.pluto.common.model.InvokeRequest;
 import org.freemason.pluto.common.utils.SerializationUtils;
+
 import java.util.List;
 
-import static org.freemason.pluto.common.Constants.MAX_CONTENT_LENGTH;
-import static org.freemason.pluto.common.Constants.PROTOCOL_HEADER_SIGN;
+import static org.freemason.pluto.common.model.ETFOProtocol.MAX_CONTENT_LENGTH;
+import static org.freemason.pluto.common.model.ETFOProtocol.PROTOCOL_HEADER_SIGN;
+
 
 /**
  * 协议解码器
