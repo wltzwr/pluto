@@ -6,6 +6,7 @@
     <modules>
         <module>pluto-common</module>
         <module>pluto-provider</module>
+        <module>pluto-consumer</module>
     </modules>
 
 
@@ -58,6 +59,13 @@
                 <artifactId>fst</artifactId>
                 <version>${fst.version}</version>
             </dependency>
+
+
+            <!--<dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>2.0.3.RELEASE</version>
+            </dependency>-->
 
         </dependencies>
 
