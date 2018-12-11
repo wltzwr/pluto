@@ -20,12 +20,6 @@ public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar,
 
         ClassPathReferenceScanner scanner = new ClassPathReferenceScanner(registry);
 
-        scanner.addIncludeFilter((MetadataReader var1, MetadataReaderFactory var2) -> {
-
-            System.out.println(var1.getClassMetadata().getEnclosingClassName());
-            return var1.getClassMetadata().isInterface();
-        });
-
         String[] pkgs = annoAttrs.getStringArray("basePackages");
 
 
