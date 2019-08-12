@@ -11,7 +11,11 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.TypeFilter;
 
 import java.util.Set;
-
+/**
+ * 扫描{@link ReferenceScan#basePackages()}下的所有包含{@link Reference}并且是接口的class
+ * @author wangran
+ * @since 1.0
+ */
 public class ClassPathReferenceScanner extends ClassPathBeanDefinitionScanner {
     private static final String REFERENCE_ANNOTATION_CLASS_NAME = Reference.class.getName();
 

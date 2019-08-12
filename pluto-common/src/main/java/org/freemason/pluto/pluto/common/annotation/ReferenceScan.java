@@ -10,6 +10,7 @@ import java.lang.annotation.*;
  * 这些接口类均会被视为需要生成代理对象并调用rpc服务
  * @author wangran
  * @since 1.0
+ * @see Reference
  * @see ReferenceScannerRegistrar
  */
 @Target({ElementType.TYPE})

@@ -36,10 +36,7 @@ public class Constants {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            System.out.println(proxy.getClass());
-            System.out.println(method.getName());
-            System.out.println(args);
-            return 1;
+            return null;
         }
     }
 

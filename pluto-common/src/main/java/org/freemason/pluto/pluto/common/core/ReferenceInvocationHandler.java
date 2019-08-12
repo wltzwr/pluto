@@ -1,4 +1,4 @@
-package org.freemason.pluto.consumer;
+package org.freemason.pluto.pluto.common.core;
 
 import org.freemason.pluto.pluto.common.endpoint.ClientEndpoint;
 import org.freemason.pluto.pluto.common.endpoint.NettyClientEndpoint;
@@ -11,13 +11,15 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 public class ReferenceInvocationHandler implements InvocationHandler, Serializable{
-    ClientEndpoint client = new NettyClientEndpoint(8341, "localhost", new ClientInvokeHandler());
+   // ClientEndpoint client = new NettyClientEndpoint(8341, "localhost", new ClientInvokeHandler());
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        InvokeRequest request = new MethodInvokeRequest(method, args);
+        //InvokeRequest request = new MethodInvokeRequest(method, args);
 
-        return client.send(request);
+        System.out.println(method);
+        //return client.send(request);
+        return new Object();
     }
 
 }

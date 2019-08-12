@@ -25,10 +25,7 @@ public class NettyServerEndpoint extends AbstractEndpoint{
 
     @Override
     protected void start() {
-
         try {
-
-
             channel = bootstrap.bind(port).sync().channel();
         } catch (InterruptedException e) {
             //ignore

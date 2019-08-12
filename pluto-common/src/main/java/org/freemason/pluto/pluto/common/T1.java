@@ -1,4 +1,4 @@
-package org.freemason.pluto.consumer;
+package org.freemason.pluto.pluto.common;
 
 
 import org.freemason.pluto.pluto.common.annotation.Reference;
