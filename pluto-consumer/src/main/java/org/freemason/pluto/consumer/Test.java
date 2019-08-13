@@ -1,8 +1,7 @@
 package org.freemason.pluto.consumer;
 
 
-import org.freemason.pluto.pluto.common.annotation.ReferenceScan;
-import org.freemason.pluto.pluto.common.method.MethodManagement;
+import org.freemason.pluto.common.annotation.ReferenceScan;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +17,6 @@ public class Test implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        MethodManagement.registerMethod(null);
 
         T1 t1 = applicationContext.getBean(T1.class);
 
