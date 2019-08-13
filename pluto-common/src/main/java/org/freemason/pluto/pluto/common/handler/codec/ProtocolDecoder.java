@@ -39,7 +39,7 @@ public class ProtocolDecoder extends ByteToMessageDecoder {
                 beginIndex = in.readerIndex();
                 break;
             }else {
-                //reset读索引到读取int之前的标记位置  之后读取一个byte  继续循环
+                //reset读索引到读取int之前的标记位置  之后读取一个byte  继续
                 in.resetReaderIndex();
                 in.readByte();
             }

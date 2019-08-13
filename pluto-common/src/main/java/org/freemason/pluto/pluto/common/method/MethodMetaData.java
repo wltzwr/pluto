@@ -10,6 +10,10 @@ public class MethodMetaData {
 
     private transient Method method;
 
+    private String className;
+
+    private String methodName;
+
     private List<String> parameterTypeNames;
 
     private String returnTypeName;
@@ -20,8 +24,12 @@ public class MethodMetaData {
         init();
     }
 
+    public String getClassName() {
+        return className;
+    }
+
     public String getMethodName(){
-        return method.getName();
+        return methodName;
     }
 
     public List<String> getParameterTypeNames(){
@@ -32,12 +40,12 @@ public class MethodMetaData {
         return returnTypeName;
     }
 
+
+
     private void init(){
         initParameterTypeNames();
-        initReturnedTypeName();
-    }
-
-    private void initReturnedTypeName() {
+        this.className = method.getDeclaringClass().getName();
+        this.methodName = method.getName();
         returnTypeName = method.getReturnType().getSimpleName();
     }
 
@@ -57,8 +65,16 @@ public class MethodMetaData {
             return false;
         if (!(obj instanceof MethodMetaData))
             return false;
+        MethodMetaData other = (MethodMetaData)obj;
+        if (this == other)
+            return true;
+        return this.getMethodName().equals(other.getMethodName())
+                && this.getParameterTypeNames().equals(other.parameterTypeNames)
+                && this.getReturnType().equals(other.getReturnType());
+    }
 
-
-        return false;
+    @Override
+    public int hashCode() {
+        return this.getReturnType().hashCode() + this.getParameterTypeNames().hashCode() + this.getMethodName().hashCode();
     }
 }
