@@ -1,13 +1,13 @@
-package org.freemason.pluto.common.core;
+package org.freemason.pluto.common.transmission;
 
 import org.springframework.util.Assert;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MethodInvocationMetaData {
-
+public class RequestBody  implements Serializable {
     private transient Method method;
 
     private String className;
@@ -18,10 +18,17 @@ public class MethodInvocationMetaData {
 
     private String returnTypeName;
 
-    public MethodInvocationMetaData(Method method){
+    private Object[] args;
+
+    public RequestBody(Method method, Object[] args){
         Assert.notNull(method, "method must not be null");
         this.method = method;
+        this.args = args;
         init();
+    }
+
+    public RequestBody(Method method){
+        this(method, null);
     }
 
     public String getClassName() {
@@ -40,13 +47,19 @@ public class MethodInvocationMetaData {
         return returnTypeName;
     }
 
+    public Object[] getArgs() {
+        return args;
+    }
 
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
 
     private void init(){
         initParameterTypeNames();
-        this.className = method.getDeclaringClass().getName();
         this.methodName = method.getName();
-        returnTypeName = method.getReturnType().getSimpleName();
+        this.className = method.getDeclaringClass().getSimpleName();
+        this.returnTypeName = method.getReturnType().getSimpleName();
     }
 
     private void initParameterTypeNames(){
@@ -63,18 +76,24 @@ public class MethodInvocationMetaData {
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        if (!(obj instanceof MethodInvocationMetaData))
+        if (!(obj instanceof RequestBody))
             return false;
-        MethodInvocationMetaData other = (MethodInvocationMetaData)obj;
+        RequestBody other = (RequestBody)obj;
         if (this == other)
             return true;
+        //  方法重载要求方法名和返回值类型相同 只有参数不同
         return this.getMethodName().equals(other.getMethodName())
-                && this.getParameterTypeNames().equals(other.parameterTypeNames)
-                && this.getReturnType().equals(other.getReturnType());
+                && this.getParameterTypeNames().equals(other.getParameterTypeNames())
+                && this.getReturnType().equals(other.getReturnType())
+                && this.getClassName().equals(other.getClassName());
     }
 
     @Override
     public int hashCode() {
-        return this.getReturnType().hashCode() + this.getParameterTypeNames().hashCode() + this.getMethodName().hashCode();
+        return this.getReturnType().hashCode()
+                + this.getParameterTypeNames().hashCode()
+                + this.getMethodName().hashCode()
+                + this.getClassName().hashCode();
     }
+
 }

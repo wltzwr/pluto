@@ -1,6 +1,7 @@
 package org.freemason.pluto.common.transmission.protocol;
 
 
+import java.util.*;
 
 /**
  * 交互协议的模型
@@ -23,10 +24,20 @@ public class ETFOProtocol {
 
     public static final int CONTENT_MAX_LENGTH = 1 << 10;
 
+    public static final byte BIZ_SIGN = 0xA;
+
     public static final byte HEART_BEAT_SIGN = 0xB;
 
-    public static final byte INVOKE_SIGN = 0xA;
+    public static final byte PING_SIGN = 0xC;
 
+    public static Set<Byte> TYPES;
+    static {
+        TYPES = new LinkedHashSet<>(3);
+        TYPES.add(BIZ_SIGN);
+        TYPES.add(HEART_BEAT_SIGN);
+        TYPES.add(PING_SIGN);
+        TYPES = Collections.unmodifiableSet(TYPES);
+    }
 
     //开始的头标志 4 byte
     private final int header_sign = PROTOCOL_HEADER_SIGN;

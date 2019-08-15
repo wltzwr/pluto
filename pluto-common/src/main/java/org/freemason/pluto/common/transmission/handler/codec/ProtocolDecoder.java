@@ -3,8 +3,8 @@ package org.freemason.pluto.common.transmission.handler.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.freemason.pluto.common.transmission.Message;
 import org.freemason.pluto.common.utils.SerializationUtils;
-import org.freemason.pluto.common.model.InvokeRequest;
 
 import java.util.List;
 
@@ -74,6 +74,6 @@ public class ProtocolDecoder extends ByteToMessageDecoder {
 
         byte[] content = new byte[contentLength];
         in.readBytes(content);
-        out.add(SerializationUtils.deserialize(content, InvokeRequest.class));
+        out.add(SerializationUtils.deserialize(content, Message.class));
     }
 }

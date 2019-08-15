@@ -3,8 +3,8 @@ package org.freemason.pluto.common.transmission.handler.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.freemason.pluto.common.transmission.Message;
 import org.freemason.pluto.common.utils.SerializationUtils;
-import org.freemason.pluto.common.transmission.Exchange;
 
 import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.PROTOCOL_HEADER_SIGN;
 
@@ -15,16 +15,16 @@ import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.PROT
  * @author wangran
  * @since 1.0
  */
-public class ProtocolEncoder extends MessageToByteEncoder<Exchange> {
+public class ProtocolEncoder extends MessageToByteEncoder<Message> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Exchange request, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, Message message, ByteBuf out) throws Exception {
         //序列化invokeResponse
-        byte[] content = SerializationUtils.serialize(request);
+        byte[] content = SerializationUtils.serialize(message);
         //写消息头标识
         out.writeInt(PROTOCOL_HEADER_SIGN);
         //写消息类型
-        out.writeByte(request.getType());
+        out.writeByte(message.getType());
         //写消息内容长度
         out.writeInt(content.length);
         //写消息内容

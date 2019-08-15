@@ -1,38 +1,25 @@
 package org.freemason.pluto.common.utils;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class ClassUtils {
-    private ClassUtils(){}
-
-    public static Class<?> getClass(String className)  throws ClassNotFoundException {
-        if (className == null) {
-            throw new NullPointerException("className must not be null.");
-        }
-        Class clazz;
-        try {
-            clazz = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            switch (className) {
-                case "byte":
-                    return byte.class;
-                case "int":
-                    return int.class;
-                case "short":
-                    return short.class;
-                case "long":
-                    return long.class;
-                case "boolean":
-                    return boolean.class;
-                case "char":
-                    return char.class;
-                case "double":
-                    return double.class;
-                case "float":
-                    return float.class;
-                default:
-                    throw new ClassNotFoundException("can not find class:"+ className +".");
-            }
-        }
-        return clazz;
+    private static Set<Method> OBJECT_METHOD_SET = new LinkedHashSet<>(Arrays.asList(Object.class.getMethods()));
+    /**
+     * 获取类中 public 的实例方法
+     * @param clazz 用解释吗？
+     * @return  实例方法set
+     */
+    public static Set<Method> getPublicInstanceMethod(Class<?> clazz){
+        if (clazz == null)
+            throw new NullPointerException("class must not be null.");
+        Set<Method> methodSet = new LinkedHashSet<>(Arrays.asList(clazz.getMethods()));
+        return methodSet.parallelStream()
+                .filter(method -> !OBJECT_METHOD_SET.contains(method) && !Modifier.isStatic(method.getModifiers()))
+                .collect(Collectors.toSet());
     }
-
 }
