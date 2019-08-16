@@ -18,28 +18,29 @@ import java.lang.reflect.Method;
  * @author wangran0430@gmail.com
  * @since 1.0
  */
-public class ReferencedInvocationHandler implements InvocationHandler, Serializable{
+public class ReferencedInvocationHandler implements InvocationHandler{
   // ClientEndpoint client=  new NettyClientEndpoint(8341, "localhost", new ClientInvokeHandler());
+
+    private MessageTransceiver transceiver;
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        /*InvocationRequest request = new InvocationRequest(method, args);
+        InvocationRequest request = new InvocationRequest(method, args);
         try {
-            Message<ResponseBody, String> response = MessageTransceiver.exchange(request);
-            ResponseBody responseBody =
+            Message<ResponseBody, String> response = transceiver.exchange(request);
+            ResponseBody responseBody = response.getBody();
             if (response.getBody().isSuccess()){
-                return
+                return responseBody.getResult();
+            } else {
+                throw new InvocationException(responseBody.getExceptionMessage());
             }
-            return new Object();
-        }*/
-        return null;
+        } catch (Exception e){
+            throw new InvocationException(e);
+        }
     }
 
 
-    public static void main(String[] args) throws Throwable {
-        ReferencedInvocationHandler r = new ReferencedInvocationHandler();
-        r.invoke(new Object(),Object.class.getMethod("hashCode"),null);
-
-
-
+    public ReferencedInvocationHandler(MessageTransceiver transceiver){
+        this.transceiver = transceiver;
     }
 }

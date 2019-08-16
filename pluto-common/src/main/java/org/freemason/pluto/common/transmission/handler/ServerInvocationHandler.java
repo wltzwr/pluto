@@ -26,7 +26,7 @@ public class ServerInvocationHandler extends SimpleChannelInboundHandler<Invocat
         HandlerMetaData metaData = invocationHandlerMapping.getHandlerMethod(body);
         Message<ResponseBody, String> response;
         if (metaData == null){
-            response = new InvocationResponse(request, ResponseBody.newFailureBody("no such method."));
+            response = new InvocationResponse(request, ResponseBody.newFailureBody(new NoSuchMethodException()));
         } else {
             Object[] args = body.getArgs();
             Object result;

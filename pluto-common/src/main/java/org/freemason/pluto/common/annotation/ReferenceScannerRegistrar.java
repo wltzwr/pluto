@@ -1,7 +1,9 @@
 package org.freemason.pluto.common.annotation;
 
 import org.freemason.pluto.common.core.ProxyFactoryBean;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
@@ -17,8 +19,9 @@ import java.util.Set;
  * @author wangran0430@gmail.com
  * @since 1.0
  */
-public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar{
+public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar, BeanPostProcessor {
     private static final String BASE_PACKAGES = "basePackages";
+    private ApplicationContext applicationContext;
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         AnnotationAttributes annotationAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(ReferenceScan.class.getName()));
@@ -33,7 +36,7 @@ public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar{
     private void processBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitions){
         beanDefinitions.forEach(holder -> {
             GenericBeanDefinition definition = (GenericBeanDefinition)holder.getBeanDefinition();
-            String beanOriginalClassName = definition.getBeanClassName();
+            String originalClassName = definition.getBeanClassName();
             /**
              * 调用{@link ProxyFactoryBean#ProxyFactoryBean(Class)}
              * ProxyFactoryBean “必须” 提供 含参构造函数
@@ -42,6 +45,7 @@ public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar{
              * 如果用属性值则 对应属性必须提供set方法
              * definition.getPropertyValues().add("referencedInterface", beanOriginalClassName);
              */
+            definition.getConstructorArgumentValues().addGenericArgumentValue(originalClassName);
             definition.setBeanClass(ProxyFactoryBean.class);
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
         });

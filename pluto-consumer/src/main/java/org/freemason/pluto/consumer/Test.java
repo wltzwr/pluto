@@ -7,7 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan("org.freemason")
 @SpringBootApplication
 @ReferenceScan(basePackages = "org.freemason.pluto.consumer")
 public class Test implements ApplicationContextAware {
@@ -15,11 +17,18 @@ public class Test implements ApplicationContextAware {
         new SpringApplication(Test.class).run(args);
     }
 
+
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
         T1 t1 = applicationContext.getBean(T1.class);
 
-            t1.test();
+          try {
+              User u = t1.getUser();
+              System.out.println(u);
+          }catch (Exception e){
+
+          }
     }
 }

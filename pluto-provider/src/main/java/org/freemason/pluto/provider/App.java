@@ -21,21 +21,28 @@ public class App {
 
 
 
+        String saaa  = "测试cecece";
+
+        System.out.println(saaa.getBytes().length);
     }
 
     private static List<String> concurrentGet(){
-        String original = "a|b|c|d|e|f|g";
-        int threshold = 1500;
+        String original = "asdd|basd|dasdasdc|dafd|eggfg|hhhghghghf|ghghghgh|h|idfdfdf|jhghgh|k|l|m|n|o|p|q|asd|asd";
+        int byteThreshold = 15;
+        int keyThreshold = 3;
         //  ------------------------
-        String[] keys = original.split("|");
+        String[] keys = original.split("\\|");
         StringBuilder sb = new StringBuilder();
+        int count = 0;
         List<String> params = new ArrayList<>();
         for (String key : keys) {
-            if (sb.length() + key.length() < threshold){
+            if (sb.length() + key.length() < byteThreshold && count < keyThreshold){
                 sb.append(key).append("/");
+                count++;
             } else {
                 params.add(sb.deleteCharAt(sb.length() - 1).toString());
                 sb.setLength(0);
+                count = 0;
             }
         }
         final CountDownLatch latch = new CountDownLatch(params.size());
@@ -58,6 +65,7 @@ public class App {
     private static List<String> get(String param){
         return new ArrayList<>();
     }
+
 
 
 }

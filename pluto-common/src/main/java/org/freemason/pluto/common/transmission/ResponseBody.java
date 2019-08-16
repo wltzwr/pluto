@@ -10,11 +10,11 @@ public class ResponseBody implements Serializable {
     private String exceptionMessage;
 
     public static  ResponseBody newSuccessBody(Object result){
-        return new ResponseBody(result);
+        return new ResponseBody(result, true);
     }
 
-    public static  ResponseBody newFailureBody(String exceptionMessage){
-        return new ResponseBody(exceptionMessage);
+    public static  ResponseBody newFailureBody(Exception exception){
+        return new ResponseBody(exception);
     }
 
     public ResponseBody(Object result, boolean success, String exceptionMessage) {
@@ -27,12 +27,8 @@ public class ResponseBody implements Serializable {
         this(result, success, null);
     }
 
-    public ResponseBody(Object result) {
-        this(result, true, null);
-    }
-
-    public ResponseBody(String exceptionMessage) {
-        this(null, false, exceptionMessage);
+    public ResponseBody(Exception e) {
+        this(null, false, e.getMessage());
     }
 
     public Object getResult() {
