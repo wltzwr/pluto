@@ -1,15 +1,12 @@
-package org.freemason.pluto.common.core;
+package org.freemason.pluto.common.core.proxy;
 
-import io.netty.channel.ChannelFuture;
+import org.freemason.pluto.common.core.ClientMessageTransceiver;
+import org.freemason.pluto.common.core.InvocationException;
 import org.freemason.pluto.common.transmission.InvocationRequest;
+import org.freemason.pluto.common.transmission.InvocationResponse;
 import org.freemason.pluto.common.transmission.Message;
-import org.freemason.pluto.common.transmission.RequestBody;
 import org.freemason.pluto.common.transmission.ResponseBody;
-import org.freemason.pluto.common.transmission.endpoint.ClientEndpoint;
-import org.freemason.pluto.common.transmission.endpoint.NettyClientEndpoint;
-import org.freemason.pluto.common.transmission.handler.ClientInvokeHandler;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 /**
@@ -19,17 +16,16 @@ import java.lang.reflect.Method;
  * @since 1.0
  */
 public class ReferencedInvocationHandler implements InvocationHandler{
-  // ClientEndpoint client=  new NettyClientEndpoint(8341, "localhost", new ClientInvokeHandler());
 
-    private MessageTransceiver transceiver;
+    private ClientMessageTransceiver transceiver;
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args){
         InvocationRequest request = new InvocationRequest(method, args);
         try {
-            Message<ResponseBody, String> response = transceiver.exchange(request);
+            InvocationResponse response = transceiver.exchange(request);
             ResponseBody responseBody = response.getBody();
-            if (response.getBody().isSuccess()){
+            if (responseBody.isSuccess()){
                 return responseBody.getResult();
             } else {
                 throw new InvocationException(responseBody.getExceptionMessage());
@@ -40,7 +36,7 @@ public class ReferencedInvocationHandler implements InvocationHandler{
     }
 
 
-    public ReferencedInvocationHandler(MessageTransceiver transceiver){
+    public ReferencedInvocationHandler(ClientMessageTransceiver transceiver){
         this.transceiver = transceiver;
     }
 }

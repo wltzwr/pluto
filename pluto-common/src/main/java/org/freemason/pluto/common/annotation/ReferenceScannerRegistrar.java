@@ -1,13 +1,10 @@
 package org.freemason.pluto.common.annotation;
 
-import org.freemason.pluto.common.core.ProxyFactoryBean;
-import org.springframework.beans.BeansException;
+import org.freemason.pluto.common.core.proxy.InvocationFactoryBean;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -19,7 +16,7 @@ import java.util.Set;
  * @author wangran0430@gmail.com
  * @since 1.0
  */
-public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar, BeanPostProcessor {
+public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar {
     private static final String BASE_PACKAGES = "basePackages";
     private ApplicationContext applicationContext;
     @Override
@@ -45,8 +42,9 @@ public class ReferenceScannerRegistrar implements ImportBeanDefinitionRegistrar,
              * 如果用属性值则 对应属性必须提供set方法
              * definition.getPropertyValues().add("referencedInterface", beanOriginalClassName);
              */
-            definition.getConstructorArgumentValues().addGenericArgumentValue(originalClassName);
-            definition.setBeanClass(ProxyFactoryBean.class);
+            //definition.getConstructorArgumentValues().addGenericArgumentValue(originalClassName);
+            definition.getPropertyValues().add("referencedInterface", originalClassName);
+            definition.setBeanClass(InvocationFactoryBean.class);
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
         });
     }

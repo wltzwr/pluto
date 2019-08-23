@@ -4,7 +4,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.freemason.pluto.common.core.HandlerMetaData;
-import org.freemason.pluto.common.core.InvocationMappingHandlerMapping;
+import org.freemason.pluto.common.core.proxy.InvocationMappingHandlerMapping;
 import org.freemason.pluto.common.transmission.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

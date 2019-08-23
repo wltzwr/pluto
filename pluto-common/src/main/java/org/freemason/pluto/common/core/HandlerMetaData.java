@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 public class HandlerMetaData {
     private final Object handlerObject;
     private final Method handlerMethod;
-    HandlerMetaData(Object handlerObject, Method handlerMethod) {
+    public HandlerMetaData(Object handlerObject, Method handlerMethod) {
         this.handlerObject = handlerObject;
         this.handlerMethod = handlerMethod;
     }

@@ -5,6 +5,11 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.freemason.pluto.common.transmission.handler.ChannelHandlerInitializer;
+import org.freemason.pluto.common.transmission.handler.ClientInvocationHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.net.ConnectException;
 
 /**
  * Netty客户端端点
@@ -12,11 +17,12 @@ import org.freemason.pluto.common.transmission.handler.ChannelHandlerInitializer
  * @since 1.0
  */
 public class NettyClientEndpoint extends AbstractEndpoint implements ClientEndpoint {
+
     private final int port;
     private final String host;
     private Bootstrap bootstrap;
 
-    public NettyClientEndpoint(int port, String host, ChannelInboundHandler...handlers){
+    public NettyClientEndpoint(String host, int port, ChannelInboundHandler...handlers){
         this.port = port;
         this.host = host;
         bootstrap = new Bootstrap();
@@ -30,8 +36,9 @@ public class NettyClientEndpoint extends AbstractEndpoint implements ClientEndpo
     protected void start(){
         try {
             channel = bootstrap.connect(host, port).sync().channel();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             //ignore
+            System.out.println("链接失败");
         }
     }
 
