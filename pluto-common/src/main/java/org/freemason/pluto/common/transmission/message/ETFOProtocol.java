@@ -1,4 +1,4 @@
-package org.freemason.pluto.common.transmission.protocol;
+package org.freemason.pluto.common.transmission.message;
 
 
 import java.util.*;
@@ -8,16 +8,16 @@ import java.util.*;
  */
 public class ETFOProtocol {
 
-    /*  头标识    类型    内容长度    内容
-        int      byte    int        byte[]
-        4byte    1byte   4byte      数组长度
-        8341     0xA/0xB  <1024
-        ┌----┐    ┌-┐    ┌----┐    ┌--------
-        │    │    │ │    │    │    │        .....
-        └----┘    └-┘    └----┘    └--------
+    /*   头标识       类型     内容长度              内容
+    +---------------+----+---------------+-----------------......+---------------+
+    |     8341      |type|content-length |       content         |     8341      |
+    +---------------+----+---------------+-----------------......+---------------+
+         4byte      1byte      4byte      ${content-length} byte
+    |                                                            |
+    ---------------------------\  /------------------------------
+                                \/
+                             完成报文
     */
-
-
     public static final String DEFAULT_VERSION = "1.0.0";
 
     public static final int PROTOCOL_HEADER_SIGN = 8341;
@@ -43,7 +43,7 @@ public class ETFOProtocol {
     private final int header_sign = PROTOCOL_HEADER_SIGN;
     //content长度 4 byte
     private int contentLength;
-    //消息类型  0xB 表示心跳包 0xA 业务信息包 1 byte
+    //消息类型  0xB 表示心跳包    0xA 业务信息包     0xC  包         1 byte
     private byte type;
     //内容
     private byte[] content;
@@ -70,8 +70,4 @@ public class ETFOProtocol {
         return contentLength;
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(HEART_BEAT_SIGN);
-    }
 }

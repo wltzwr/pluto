@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /pluto
+
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/demo_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 325430Wrdsr
+      maximum-pool-size: 100
+mybatis:
+  mapper-locations:

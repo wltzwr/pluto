@@ -1,43 +1,32 @@
 package org.freemason.pluto.common;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.freemason.pluto.common.core.InvocationMappingHandlerMapping;
+import org.freemason.pluto.common.transmission.HeartBeat;
+import org.freemason.pluto.common.transmission.InvocationRequest;
+import org.freemason.pluto.common.transmission.Message;
+import org.freemason.pluto.common.transmission.RequestBody;
+import org.freemason.pluto.common.utils.SerializationUtils;
 
 public class Constants {
 
+    public static void main(String[] args) throws NoSuchMethodException, InterruptedException {
+        /*Message<RequestBody, String> request
+                = new InvocationRequest(InvocationMappingHandlerMapping.class.getMethod("getHandlerMethod", RequestBody.class)
+                ,new Object[]{new RequestBody(Constants.class.getMethod("hashCode"))});
 
-    public static void main(String[] args) {
-        Service s = (Service)Proxy.newProxyInstance(Constants.class.getClassLoader(),new Class[]{Service.class}, new ServiceProxyHandler());
+        byte[] rrr = SerializationUtils.serialize(request);
 
+        request = SerializationUtils.deserialize(rrr, Message.class);*/
 
+        for (;;){
+            Thread.sleep(2000);
 
-        s.say("name");
-        s.hello();
-
-        s.execute(0);
-    }
-
-
-
-
-
-    public interface Service{
-
-        void say(String name);
-
-        void hello();
-
-        int execute(int a);
-
-    }
-
-    public static class ServiceProxyHandler implements InvocationHandler{
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            return null;
+            System.out.println(JSON.toJSONString(HeartBeat.getInstance()));
         }
-    }
 
+
+    }
 }

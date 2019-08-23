@@ -1,6 +1,6 @@
 package org.freemason.pluto.common.transmission;
 
-import org.freemason.pluto.common.transmission.protocol.ETFOProtocol;
+import org.freemason.pluto.common.transmission.message.ETFOProtocol;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;

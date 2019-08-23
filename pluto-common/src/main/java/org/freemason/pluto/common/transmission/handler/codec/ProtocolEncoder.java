@@ -6,7 +6,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import org.freemason.pluto.common.transmission.Message;
 import org.freemason.pluto.common.utils.SerializationUtils;
 
-import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.PROTOCOL_HEADER_SIGN;
+import static org.freemason.pluto.common.transmission.message.ETFOProtocol.PROTOCOL_HEADER_SIGN;
 
 
 /**

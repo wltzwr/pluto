@@ -5,7 +5,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.BIZ_SIGN;
+import static org.freemason.pluto.common.transmission.message.ETFOProtocol.BIZ_SIGN;
 
 public class InvocationRequest extends AbstractMessage<RequestBody, String>{
 

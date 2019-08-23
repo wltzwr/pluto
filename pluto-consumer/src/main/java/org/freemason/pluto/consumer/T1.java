@@ -7,6 +7,5 @@ import org.freemason.pluto.common.annotation.Reference;
 public interface T1 {
     void test();
 
-    User getUser();
 
 }

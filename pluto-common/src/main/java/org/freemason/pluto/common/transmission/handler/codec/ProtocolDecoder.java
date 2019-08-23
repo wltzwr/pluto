@@ -8,8 +8,8 @@ import org.freemason.pluto.common.utils.SerializationUtils;
 
 import java.util.List;
 
-import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.CONTENT_MAX_LENGTH;
-import static org.freemason.pluto.common.transmission.protocol.ETFOProtocol.PROTOCOL_HEADER_SIGN;
+import static org.freemason.pluto.common.transmission.message.ETFOProtocol.CONTENT_MAX_LENGTH;
+import static org.freemason.pluto.common.transmission.message.ETFOProtocol.PROTOCOL_HEADER_SIGN;
 
 
 /**

@@ -12,23 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.freemason")
 @SpringBootApplication
 @ReferenceScan(basePackages = "org.freemason.pluto.consumer")
-public class Test implements ApplicationContextAware {
+public class Test{
     public static void main(String[] args) {
         new SpringApplication(Test.class).run(args);
-    }
-
-
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-
-        T1 t1 = applicationContext.getBean(T1.class);
-
-          try {
-              User u = t1.getUser();
-              System.out.println(u);
-          }catch (Exception e){
-
-          }
     }
 }
